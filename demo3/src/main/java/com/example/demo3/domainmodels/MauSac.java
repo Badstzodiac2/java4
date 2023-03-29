@@ -2,50 +2,61 @@ package com.example.demo3.domainmodels;
 
 import jakarta.persistence.*;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "MauSac")
 public class MauSac {
     @Id
     @Column(name = "Id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID Id;
 
     @Column(name = "Ma")
-    private String ma;
+    private String Ma;
 
     @Column(name = "Ten")
-    private String ten;
+    private String Ten;
 
     public MauSac() {
     }
 
-    public MauSac(String id, String ma, String ten) {
-        this.id = id;
-        this.ma = ma;
-        this.ten = ten;
+    public MauSac(UUID id, String ma, String ten) {
+        Id = id;
+        Ma = ma;
+        Ten = ten;
     }
 
-    public String getId() {
-        return id;
+    public UUID getId() {
+        return Id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(UUID id) {
+        Id = id;
     }
 
     public String getMa() {
-        return ma;
+        return Ma;
     }
 
     public void setMa(String ma) {
-        this.ma = ma;
+        Ma = ma;
     }
 
     public String getTen() {
-        return ten;
+        return Ten;
     }
 
     public void setTen(String ten) {
-        this.ten = ten;
+        Ten = ten;
+    }
+
+    @Override
+    public String toString() {
+        return "MauSac{" +
+                "Id=" + Id +
+                ", Ma='" + Ma + '\'' +
+                ", Ten='" + Ten + '\'' +
+                '}';
     }
 }

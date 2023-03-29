@@ -1,39 +1,71 @@
 package com.example.demo3.repository;
 
-import com.example.demo3.viewmodel.QLKhachHang;
+import com.example.demo3.domainmodels.KhachHang;
+import com.example.demo3.utils.HibernateUtil;
+import jakarta.persistence.TypedQuery;
+import org.hibernate.Session;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class KhachHangRepositories {
-    private ArrayList<QLKhachHang> list = new ArrayList<>();
+    private Session hSession;
 
-    public ArrayList<QLKhachHang>findAll() {
-        return list;
+    public KhachHangRepositories()
+    {
+        this.hSession = HibernateUtil.getFACTORY().openSession();
     }
-    public void insert (QLKhachHang kh){
-        list.add(kh);
+
+    public List<KhachHang> findAll()
+    {
+        String hql = "SELECT khObj FROM KhachHang khObj";
+        TypedQuery<KhachHang> query =
+                this.hSession.createQuery(hql, KhachHang.class);
+        return query.getResultList();
     }
-    public void edit (QLKhachHang qlkh){
-        for (int i = 0; i < this.list.size(); i++) {
-            QLKhachHang vm = this.list.get(i);
-            if (vm.getMa().equals(qlkh.getMa())) {
-                this.list.set(i, qlkh);
-            }
+
+    public void insert (KhachHang kh){
+        try {
+            this.hSession.getTransaction().begin();
+            this.hSession.persist(kh);
+            this.hSession.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            this.hSession.getTransaction().rollback();
         }
     }
-    public void delete (QLKhachHang kh){
-        list.remove(kh);
-    }
-    public QLKhachHang findByMa(String ma) {
-        {
-            for (int i = 0; i < this.list.size(); i++) {
-                QLKhachHang vm = this.list.get(i);
-                if (vm.getMa().equals(ma)) {
-                    return vm;
-                }
-            }
-
-            return null;
+    public void edit (KhachHang kh){
+        try {
+            this.hSession.getTransaction().begin();
+            this.hSession.merge(kh);
+            this.hSession.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            this.hSession.getTransaction().rollback();
         }
+    }
+    public void delete (KhachHang kh){
+        try {
+            this.hSession.getTransaction().begin();
+            this.hSession.delete(kh);
+            this.hSession.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            this.hSession.getTransaction().rollback();
+        }
+    }
+    public KhachHang findById(UUID Id)
+    {
+        return this.hSession.find(KhachHang.class, Id);
+    }
+
+    public KhachHang findByMa(String ma)
+    {
+        String hql = "SELECT khObj FROM KhachHang khObj WHERE khObj.Ma = ?1";
+        TypedQuery<KhachHang> query =
+                this.hSession.createQuery(hql, KhachHang.class);
+        query.setParameter(1, ma);
+
+        return query.getSingleResult();
     }
 }

@@ -1,7 +1,7 @@
 package com.example.demo3.controller;
 
+import com.example.demo3.domainmodels.MauSac;
 import com.example.demo3.repository.MauSacRepositories;
-import com.example.demo3.viewmodel.QLMauSac;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -26,11 +26,6 @@ public class MauSacServlet extends HttpServlet {
             HttpServletRequest request,
             HttpServletResponse response
     ) throws ServletException, IOException {
-        if (repo.findAll().isEmpty()) {
-            repo.insert(new QLMauSac("MS01", "Đen"));
-            repo.insert(new QLMauSac("MS02", "Đỏ"));
-
-        }
         request.setAttribute("list", repo.findAll());
         request.setAttribute("view", "/view/MauSac/index.jsp");
         request.getRequestDispatcher("/layout.jsp")
@@ -74,23 +69,22 @@ public class MauSacServlet extends HttpServlet {
     }
 
     protected void store(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
-        String ma = request.getParameter("ma");
-        String ten = request.getParameter("ten");
-        QLMauSac qlMauSac = new QLMauSac(ma, ten);
-        if(this.repo.findByMa(ma)!=null){
-            repo.edit(qlMauSac);
+        MauSac ms = new MauSac();
+        try {
+            BeanUtils.populate(ms, request.getParameterMap());
+            System.out.println(ms.toString());
+            this.repo.insert(ms);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        else{
-            repo.insert(qlMauSac);
-            System.out.println("Thêm thành công");
-        }
+        System.out.println("Thêm thành công");
+        response.sendRedirect("/MauSac/index");
 
     }
 
     private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String ma = request.getParameter("ma");
-        QLMauSac ms = this.repo.findByMa(ma);
+        String ma = request.getParameter("Ma");
+        MauSac ms = this.repo.findByMa(ma);
         if(ms == null){
             System.out.println("Khong tim thay");
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -103,7 +97,8 @@ public class MauSacServlet extends HttpServlet {
     }
 
     private void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        QLMauSac ms = new QLMauSac();
+        String ma = request.getParameter("Ma");
+        MauSac ms = this.repo.findByMa(ma);
         try{
             BeanUtils.populate(ms, request.getParameterMap());
             this.repo.edit(ms);
@@ -115,9 +110,9 @@ public class MauSacServlet extends HttpServlet {
     }
 
     private void edit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String ma = request.getParameter("ma");
-        QLMauSac qlMauSac = this.repo.findByMa(ma);
-        request.setAttribute("ms", qlMauSac);
+        String ma = request.getParameter("Ma");
+        MauSac ms = this.repo.findByMa(ma);
+        request.setAttribute("ms", ms);
         request.getRequestDispatcher("/view/MauSac/edit.jsp").forward(request,response);
     }
     

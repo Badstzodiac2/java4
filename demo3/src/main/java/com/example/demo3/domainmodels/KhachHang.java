@@ -3,14 +3,15 @@ package com.example.demo3.domainmodels;
 import jakarta.persistence.*;
 
 import java.sql.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "KhachHang")
 public class KhachHang {
     @Id
     @Column(name="Id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String Id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID Id;
 
     @Column(name="Ma")
     private String Ma;
@@ -42,7 +43,10 @@ public class KhachHang {
     @Column(name="MatKhau")
     private String MatKhau;
 
-    public KhachHang(String id, String ma, String ten, String tenDem, String ho, Date ngaySinh, String sdt, String diaChi, String thanhPho, String quocGia, String matKhau) {
+    public KhachHang() {
+    }
+
+    public KhachHang(UUID id, String ma, String ten, String tenDem, String ho, Date ngaySinh, String sdt, String diaChi, String thanhPho, String quocGia, String matKhau) {
         Id = id;
         Ma = ma;
         Ten = ten;
@@ -56,14 +60,11 @@ public class KhachHang {
         MatKhau = matKhau;
     }
 
-    public KhachHang() {
-    }
-
-    public String getId() {
+    public UUID getId() {
         return Id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         Id = id;
     }
 
@@ -145,5 +146,22 @@ public class KhachHang {
 
     public void setMatKhau(String matKhau) {
         MatKhau = matKhau;
+    }
+
+    @Override
+    public String toString() {
+        return "KhachHang{" +
+                "Id=" + Id +
+                ", Ma='" + Ma + '\'' +
+                ", Ten='" + Ten + '\'' +
+                ", TenDem='" + TenDem + '\'' +
+                ", Ho='" + Ho + '\'' +
+                ", NgaySinh=" + NgaySinh +
+                ", Sdt='" + Sdt + '\'' +
+                ", DiaChi='" + DiaChi + '\'' +
+                ", ThanhPho='" + ThanhPho + '\'' +
+                ", QuocGia='" + QuocGia + '\'' +
+                ", MatKhau='" + MatKhau + '\'' +
+                '}';
     }
 }

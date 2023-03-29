@@ -58,8 +58,8 @@
                 <td>${ kh.thanhPho }</td>
                 <td>${ kh.quocGia}</td>
                 <td>
-                    <a href="/KhachHang/edit?ma=${kh.ma}" class="btn btn-primary" target="_blank">Cập nhật</a>
-                    <a href="/KhachHang/delete?ma=${kh.ma}" class="btn btn-danger">Xóa</a>
+                    <a href="/KhachHang/edit?Ma=${kh.ma}" class="btn btn-primary" target="_blank">Cập nhật</a>
+                    <a href="/KhachHang/delete?Ma=${kh.ma}" class="btn btn-danger">Xóa</a>
                 </td>
             </tr>
         </c:forEach>

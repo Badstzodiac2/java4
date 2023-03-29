@@ -3,6 +3,7 @@ package com.example.demo3.controller;
 import java.io.*;
 import java.util.ArrayList;
 
+import com.example.demo3.domainmodels.KhachHang;
 import com.example.demo3.repository.KhachHangRepositories;
 import com.example.demo3.viewmodel.QLKhachHang;
 import jakarta.servlet.ServletException;
@@ -20,12 +21,6 @@ public class KhachHangServlet extends HttpServlet {
 
     public KhachHangRepositories repo = new KhachHangRepositories();
 
-    public KhachHangServlet(){
-        if(repo.findAll().isEmpty()){
-            repo.insert(new QLKhachHang("PH1", "Ng", "Van", "AAA", "2020-10-20", "0123123123", "HN", "123456", "VN", "HN"));
-            repo.insert(new QLKhachHang("PH2", "Tran", "Van", "B", "2021-11-12", "0123123423", "ND", "123456", "VN", "HN"));
-        }
-    }
     protected void index(
             HttpServletRequest request,
             HttpServletResponse response
@@ -73,24 +68,16 @@ public class KhachHangServlet extends HttpServlet {
 
     protected void store(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException{
 
-        String ma = request.getParameter("ma");
-        String ten = request.getParameter("ten");
-        String tenDem = request.getParameter("tenDem");
-        String ho = request.getParameter(("ho"));
-        String ngaySinh = request.getParameter("ngaySinh");
-        String diaChi = request.getParameter("diaChi");
-        String thanhPho = request.getParameter("thanhPho");
-        String sdt = request.getParameter("sdt");
-        String matKhau = request.getParameter("matKhau");
-        String quocGia = request.getParameter("quocGia");
-        QLKhachHang qlKhachHang = new QLKhachHang(ma,ten,tenDem,ho,ngaySinh,sdt,diaChi,matKhau,quocGia,thanhPho);
-        if(this.repo.findByMa(ma)!=null){
-            repo.edit(qlKhachHang);
+        KhachHang kh = new KhachHang();
+        try {
+            BeanUtils.populate(kh, request.getParameterMap());
+            System.out.println(kh.toString());
+            this.repo.insert(kh);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        else{
-            repo.insert(qlKhachHang);
-            System.out.println("Thêm thành công");
-        }
+        System.out.println("Thêm thành công");
+        response.sendRedirect("/KhachHang/index");
 
     }
 
@@ -100,8 +87,8 @@ public class KhachHangServlet extends HttpServlet {
     }
 
     protected void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String ma = request.getParameter("ma");
-        QLKhachHang kh = this.repo.findByMa(ma);
+        String ma = request.getParameter("Ma");
+        KhachHang kh = repo.findByMa(ma);
         if(kh == null){
             System.out.println("Khong tim thay");
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -113,18 +100,19 @@ public class KhachHangServlet extends HttpServlet {
     }
 
     public void edit(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
-        String ma = request.getParameter("ma");
-        QLKhachHang qlKhachHang = this.repo.findByMa(ma);
-        request.setAttribute("kh", qlKhachHang);
+        String ma = request.getParameter("Ma");
+        KhachHang kh = this.repo.findByMa(ma);
+        request.setAttribute("kh", kh);
         request.getRequestDispatcher("/view/KhachHang/edit.jsp").forward(request,response);
 
     }
 
     public void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        QLKhachHang qlkh = new QLKhachHang();
+        String ma = request.getParameter("Ma");
+        KhachHang kh = this.repo.findByMa(ma);
         try {
-            BeanUtils.populate(qlkh, request.getParameterMap());
-            this.repo.edit(qlkh);
+            BeanUtils.populate(kh, request.getParameterMap());
+            this.repo.edit(kh);
         } catch (Exception e) {
             e.printStackTrace();
         }

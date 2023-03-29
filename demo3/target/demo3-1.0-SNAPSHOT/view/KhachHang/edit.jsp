@@ -22,12 +22,12 @@
     <script>
         console.log(${kh.ma}+"ma");
     </script>
-    <form method="post" action="/KhachHang/update?ma=${kh.ma}" target="_blank">
+    <form method="post" action="/KhachHang/update?Ma=${kh.ma}" target="_blank">
         <h1 style="margin: auto; width: 50%;nborder: 3px solid #008000;
   padding: 10px">Form chỉnh sửa khách hàng</h1>
         <div class="mb-3">
             <label class="form-label">Mã</label>
-            <input type="text" class="form-control" value="${kh.ma}" disabled>
+            <input type="text" class="form-control" name="ma" value="${kh.ma}" disabled>
         </div>
         <div class="mb-3">
             <label class="form-label">Tên</label>

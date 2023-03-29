@@ -1,5 +1,7 @@
 package com.example.demo3.controller;
 
+import com.example.demo3.domainmodels.ChucVu;
+import com.example.demo3.domainmodels.MauSac;
 import com.example.demo3.repository.ChucVuRepositories;
 import com.example.demo3.viewmodel.QLChucVu;
 import jakarta.servlet.ServletException;
@@ -21,12 +23,6 @@ public class ChucVuServlet extends HttpServlet {
 
     public ChucVuRepositories repo = new ChucVuRepositories();
 
-    public ChucVuServlet(){
-        if(repo.findAll().isEmpty()){
-            repo.insert(new QLChucVu("CV1", "Nhân viên"));
-            repo.insert(new QLChucVu("CV2", "Quản lý"));
-        }
-    }
     protected void index(
             HttpServletRequest request,
             HttpServletResponse response
@@ -34,87 +30,82 @@ public class ChucVuServlet extends HttpServlet {
         request.setAttribute("list", repo.findAll());
         request.setAttribute("view", "/view/ChucVu/index.jsp");
         request.getRequestDispatcher("/layout.jsp")
-                .forward(request,response);
+                .forward(request, response);
     }
+
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
         String servletPath = request.getRequestURI();
-        if(servletPath.contains("/ChucVu/create")){
-            this.create(request,response);
-        }
-        else if(servletPath.contains("/ChucVu/index")){
-            this.index(request,response);
-        }
-        else if(servletPath.contains("delete")){
-            this.delete(request,response);
-        }
-        else if(servletPath.contains("edit")){
-            this.edit(request,response);
-        }
-        else{
-            this.index(request,response);
+        if (servletPath.contains("/ChucVu/create")) {
+            this.create(request, response);
+        } else if (servletPath.contains("/ChucVu/index")) {
+            this.index(request, response);
+        } else if (servletPath.contains("delete")) {
+            this.delete(request, response);
+        } else if (servletPath.contains("edit")) {
+            this.edit(request, response);
+        } else {
+            this.index(request, response);
         }
     }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String uri = request.getRequestURI();
-        if(uri.contains("store")){
+        if (uri.contains("store")) {
             this.store(request, response);
-        }
-        else if(uri.contains("update")){
+        } else if (uri.contains("update")) {
             this.update(request, response);
         }
     }
 
 
-
     protected void create(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/view/ChucVu/create.jsp").forward(request,response);
+        request.getRequestDispatcher("/view/ChucVu/create.jsp").forward(request, response);
 
     }
 
-    protected void store(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException{
+    protected void store(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        ChucVu cv = new ChucVu();
+        try {
+            BeanUtils.populate(cv, request.getParameterMap());
+            System.out.println(cv.toString());
+            this.repo.insert(cv);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("Thêm thành công");
+        response.sendRedirect("/ChucVu/index");
 
-        String ma = request.getParameter("ma");
-        String ten = request.getParameter("ten");
-        QLChucVu qlChucVu = new QLChucVu( ma, ten);
-        if(this.repo.findByMa(ma)!=null){
-            repo.edit(qlChucVu);
-        }
-        else{
-            repo.insert(qlChucVu);
-            System.out.println("Thêm thành công");
-            response.sendRedirect("/ChucVu/index");
-        }
 
     }
 
     protected void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String ma = request.getParameter("ma");
-        QLChucVu cv = this.repo.findByMa(ma);
-        if(cv == null){
+        String ma = request.getParameter("Ma");
+        ChucVu cv = this.repo.findByMa(ma);
+        if (cv == null) {
             System.out.println("Khong tim thay");
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
-        }
-        else{
+        } else {
             this.repo.delete(cv);
             response.sendRedirect("/ChucVu/index");
         }
     }
 
-    public void edit(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
-        String ma = request.getParameter("ma");
-        QLChucVu qlChucVu = this.repo.findByMa(ma);
-        request.setAttribute("cv", qlChucVu);
-        request.getRequestDispatcher("/view/ChucVu/edit.jsp").forward(request,response);
+    public void edit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String ma = request.getParameter("Ma");
+        ChucVu cv = this.repo.findByMa(ma);
+        request.setAttribute("cv", cv);
+        request.getRequestDispatcher("/view/ChucVu/edit.jsp").forward(request, response);
     }
 
     private void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        QLChucVu qlcv = new QLChucVu();
+        String ma = request.getParameter("Ma");
+        ChucVu cv = this.repo.findByMa(ma);
         try {
-            BeanUtils.populate(qlcv, request.getParameterMap());
-            this.repo.edit(qlcv);
+            BeanUtils.populate(cv, request.getParameterMap());
+            this.repo.edit(cv);
         } catch (Exception e) {
             e.printStackTrace();
         }

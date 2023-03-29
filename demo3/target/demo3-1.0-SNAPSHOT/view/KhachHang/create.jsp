@@ -43,7 +43,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">SĐT</label>
-                <input type="number" class="form-control" name="sdt" required>
+                <input type="tel" class="form-control" name="sdt" required>
             </div>
             <div class="mb-3">
                 <label class="form-label">Địa chỉ</label>
@@ -70,7 +70,7 @@
                 <input type="password" class="form-control" name="matKhau" required>
             </div>
 
-            <button type="submit" class="btn btn-primary" onclick="return validateForm()">Add</button>
+            <button type="submit" class="btn btn-primary">Add</button>
         </form>
         <script>
             function validateForm() {

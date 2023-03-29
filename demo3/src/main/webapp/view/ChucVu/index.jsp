@@ -44,8 +44,8 @@
                     <td>${ cv.ma }</td>
                     <td>${ cv.ten }</td>
                     <td>
-                        <a href="/ChucVu/edit?ma=${cv.ma}" target="_blank" class="btn btn-primary">Cập nhật</a>
-                        <a href="/ChucVu/delete?ma=${cv.ma}" class="btn btn-danger">Xóa</a>
+                        <a href="/ChucVu/edit?Ma=${cv.ma}" target="_blank" class="btn btn-primary">Cập nhật</a>
+                        <a href="/ChucVu/delete?Ma=${cv.ma}" class="btn btn-danger">Xóa</a>
                     </td>
                 </tr>
             </c:forEach>
