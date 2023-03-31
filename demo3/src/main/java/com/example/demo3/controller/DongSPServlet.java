@@ -64,11 +64,11 @@ public class DongSPServlet extends HttpServlet {
     }
 
     protected void store(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        DongSP cv = new DongSP();
+        DongSP dsp = new DongSP();
         try {
-            BeanUtils.populate(cv, request.getParameterMap());
-            System.out.println(cv.toString());
-            this.repo.insert(cv);
+            BeanUtils.populate(dsp, request.getParameterMap());
+            System.out.println(dsp.toString());
+            this.repo.insert(dsp);
         } catch (Exception e) {
             e.printStackTrace();
         }

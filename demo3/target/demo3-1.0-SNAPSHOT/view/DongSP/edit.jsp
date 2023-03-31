@@ -19,7 +19,7 @@
 <div class="container">
     <form method="post" action="/DongSP/update?Ma=${dsp.ma}" target="_blank">
         <h1 style="margin: auto; width: 50%;nborder: 3px solid #008000;
-  padding: 10px">Form chỉnh sửa chức vụ</h1>
+  padding: 10px">Form chỉnh sửa dòng SPs</h1>
         <div class="mb-3">
             <label class="form-label">Mã</label>
             <input type="text" class="form-control" name= "ma" value="${dsp.ma}" disabled>

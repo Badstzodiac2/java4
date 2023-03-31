@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="f" uri="jakarta.tags.functions" %>
 <html>
 <head>
     <title>Bảng dòng SP</title>
@@ -19,7 +21,7 @@
 <div class="container">
     <div class="row">
         <div class="col-6">
-            <a href="/ChucVu/create" class="btn btn-success">Thêm mới</a>
+            <a href="/DongSP/create" class="btn btn-success">Thêm mới</a>
         </div>
     </div>
     <c:if test="${ f:length(list) == 0 }">
@@ -28,7 +30,7 @@
 
     <table class="table">
         <thead style="background: cyan; font-weight: bold">
-        <h3 style="text-align: center">Bảng chức vụ</h3>
+        <h3 style="text-align: center">Bảng dòng SP</h3>
         </thead>
         <thead style="background: cyan; font-weight: bold">
         <td>Mã</td>

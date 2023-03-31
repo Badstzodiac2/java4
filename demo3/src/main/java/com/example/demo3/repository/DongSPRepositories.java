@@ -18,16 +18,16 @@ public class DongSPRepositories {
 
 
     public List<DongSP> findAll(){
-        String hql = "SELECT cvObj FROM DongSP cvObj";
+        String hql = "SELECT dspObj FROM DongSP dspObj";
         TypedQuery<DongSP> query =
                 this.hSession.createQuery(hql, DongSP.class);
         return query.getResultList();
     }
 
-    public void insert (DongSP cv){
+    public void insert (DongSP dsp){
         try {
             this.hSession.getTransaction().begin();
-            this.hSession.persist(cv);
+            this.hSession.persist(dsp);
             this.hSession.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();

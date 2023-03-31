@@ -18,14 +18,14 @@
 </head>
 <body>
 <div class="container">
-    <form method="post" action="store" target="_blank">
-        <h1>Form tạo mới chức vụ</h1>
+    <form method="post" action="/DongSP/store" target="_blank">
+        <h1>Form tạo mới dòng sp</h1>
         <div class="mb-3">
-            <label class="form-label">Mã*</label>
+            <label class="form-label">Mã</label>
             <input type="text" class="form-control" name="ma" required>
         </div>
         <div class="mb-3">
-            <label class="form-label">Tên*</label>
+            <label class="form-label">Tên</label>
             <input type="text" class="form-control" name="ten" required>
         </div>
         <button type="submit" class="btn btn-primary" onclick="return validateForm()">Add</button>

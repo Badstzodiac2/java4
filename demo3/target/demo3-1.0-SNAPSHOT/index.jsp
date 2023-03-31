@@ -56,7 +56,7 @@
                     <li><a class="dropdown-item" href="/MauSac/index" target="_blank">Màu sắc</a></li>
                     <li><a class="dropdown-item" href="/ChucVu/index" target="_blank">Chức vụ</a></li>
                     <li><a class="dropdown-item" href="/CuaHang/index" target="_blank">Cửa hàng</a></li>
-
+                    <li><a class="dropdown-item" href="/DongSP/index" target="_blank">Dòng SP</a></li>
                 </ul>
                 <script>
                     var Webflow = Webflow || [];
