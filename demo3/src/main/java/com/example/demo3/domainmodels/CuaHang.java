@@ -2,86 +2,100 @@ package com.example.demo3.domainmodels;
 
 import jakarta.persistence.*;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "CuaHang")
 public class CuaHang {
     @Id
     @Column(name = "Id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID Id;
 
     @Column(name = "Ma")
-    private String ma;
+    private String Ma;
 
     @Column(name = "Ten")
-    private String ten;
+    private String Ten;
 
     @Column(name = "DiaChi")
-    private String diaChi;
+    private String DiaChi;
 
     @Column(name = "ThanhPho")
-    private String thanhPho;
+    private String ThanhPho;
 
     @Column(name = "QuocGia")
-    private String quocGia;
+    private String QuocGia;
 
     public CuaHang() {
     }
 
-    public CuaHang(String id, String ma, String ten, String diaChi, String thanhPho, String quocGia) {
-        this.id = id;
-        this.ma = ma;
-        this.ten = ten;
-        this.diaChi = diaChi;
-        this.thanhPho = thanhPho;
-        this.quocGia = quocGia;
+    public CuaHang(UUID id, String ma, String ten, String diaChi, String thanhPho, String quocGia) {
+        Id = id;
+        Ma = ma;
+        Ten = ten;
+        DiaChi = diaChi;
+        ThanhPho = thanhPho;
+        QuocGia = quocGia;
     }
 
-    public String getId() {
-        return id;
+    public UUID getId() {
+        return Id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(UUID id) {
+        Id = id;
     }
 
     public String getMa() {
-        return ma;
+        return Ma;
     }
 
     public void setMa(String ma) {
-        this.ma = ma;
+        Ma = ma;
     }
 
     public String getTen() {
-        return ten;
+        return Ten;
     }
 
     public void setTen(String ten) {
-        this.ten = ten;
+        Ten = ten;
     }
 
     public String getDiaChi() {
-        return diaChi;
+        return DiaChi;
     }
 
     public void setDiaChi(String diaChi) {
-        this.diaChi = diaChi;
+        DiaChi = diaChi;
     }
 
     public String getThanhPho() {
-        return thanhPho;
+        return ThanhPho;
     }
 
     public void setThanhPho(String thanhPho) {
-        this.thanhPho = thanhPho;
+        ThanhPho = thanhPho;
     }
 
     public String getQuocGia() {
-        return quocGia;
+        return QuocGia;
     }
 
     public void setQuocGia(String quocGia) {
-        this.quocGia = quocGia;
+        QuocGia = quocGia;
+    }
+
+    @Override
+    public String toString() {
+        return "CuaHang{" +
+                "Id=" + Id +
+                ", Ma='" + Ma + '\'' +
+                ", Ten='" + Ten + '\'' +
+                ", DiaChi='" + DiaChi + '\'' +
+                ", ThanhPho='" + ThanhPho + '\'' +
+                ", QuocGia='" + QuocGia + '\'' +
+                '}';
     }
 }

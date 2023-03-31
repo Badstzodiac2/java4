@@ -1,5 +1,6 @@
 package com.example.demo3.controller;
 
+import com.example.demo3.domainmodels.NXS;
 import com.example.demo3.repository.NXSRepositories;
 import com.example.demo3.viewmodel.QLKhachHang;
 import com.example.demo3.viewmodel.QLNXS;
@@ -22,12 +23,6 @@ public class NXSServlet extends HttpServlet {
 
     public NXSRepositories repo = new NXSRepositories();
 
-    public NXSServlet(){
-        if(repo.findAll().isEmpty()){
-            repo.insert(new QLNXS("NXS01", "Goldi" ));
-            repo.insert(new QLNXS("NXS02", "Audio" ));
-        }
-    }
 
     protected void index(
             HttpServletRequest request,
@@ -57,19 +52,19 @@ public class NXSServlet extends HttpServlet {
 
     private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String ma = request.getParameter("ma");
-        QLNXS qlnxs = this.repo.findByMa(ma);
-        if (qlnxs == null) {
+        NXS nxs = this.repo.findByMa(ma);
+        if (nxs == null) {
             System.out.println("Khong tim thay");
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
         } else {
-            this.repo.delete(qlnxs);
+            this.repo.delete(nxs);
             response.sendRedirect("/NXS/index");
         }
     }
 
     private void edit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String ma = request.getParameter("ma");
-        QLNXS nxs = this.repo.findByMa(ma);
+        String ma = request.getParameter("Ma");
+        NXS nxs = this.repo.findByMa(ma);
         request.setAttribute("nxs", nxs);
         request.getRequestDispatcher("/view/NXS/edit.jsp").forward(request, response);
     }
@@ -84,10 +79,11 @@ public class NXSServlet extends HttpServlet {
     }
 
     private void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        QLNXS qlnxs = new QLNXS();
+        String ma = request.getParameter("Ma");
+        NXS nxs = repo.findByMa(ma);
         try {
-            BeanUtils.populate(qlnxs, request.getParameterMap());
-            this.repo.edit(qlnxs);
+            BeanUtils.populate(nxs, request.getParameterMap());
+            this.repo.edit(nxs);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -100,11 +96,16 @@ public class NXSServlet extends HttpServlet {
     }
 
     protected void store(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException{
-        String ma = request.getParameter("ma");
-        String ten = request.getParameter("ten");
-        QLNXS qlnxs = new QLNXS( ma, ten);
-        repo.insert(qlnxs);
+        NXS nxs = new NXS();
+        try{
+            BeanUtils.populate(nxs, request.getParameterMap());
+            repo.insert(nxs);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
         System.out.println("Thêm thành công");
+        response.sendRedirect("/NXS/index");
 
     }
     public void destroy() {

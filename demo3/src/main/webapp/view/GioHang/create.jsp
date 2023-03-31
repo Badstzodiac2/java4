@@ -47,13 +47,13 @@
             <div class="mb-3">
                 <label class="form-label">Tình trạng</label>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" value="Đã thanh toán" name="tinhTrang" checked required>
+                    <input class="form-check-input" type="radio" value="true" name="tinhTrang" checked required>
                     <label class="form-check-label">
                         Đã thanh toán
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" value="Chưa thanh toán" name="tinhTrang" required>
+                    <input class="form-check-input" type="radio" value="false" name="tinhTrang" required>
                     <label class="form-check-label">
                         Chưa thanh toán
                     </label>

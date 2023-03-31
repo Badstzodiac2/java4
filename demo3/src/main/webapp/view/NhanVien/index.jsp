@@ -53,10 +53,12 @@
                     <td>${nv.ngaySinh}</td>
                     <td>${nv.diaChi}</td>
                     <td>${nv.sdt}</td>
-                    <td>${nv.trangThai}</td>
+                    <td><c:if test="${nv.trangThai == 'true'}">Đang làm</c:if>
+                        <c:if test="${nv.trangThai == 'false'}">Đã nghỉ</c:if>
+                    </td>
                     <td>
-                        <a href="/NhanVien/edit?ma=${nv.ma}" target="_blank" class="btn btn-primary">Cập nhật</a>
-                        <a href="/NhanVien/delete?ma=${nv.ma}" class="btn btn-danger">Xóa</a>
+                        <a href="/NhanVien/edit?Ma=${nv.ma}" target="_blank" class="btn btn-primary">Cập nhật</a>
+                        <a href="/NhanVien/delete?Ma=${nv.ma}" class="btn btn-danger">Xóa</a>
                     </td>
                 </tr>
             </c:forEach>

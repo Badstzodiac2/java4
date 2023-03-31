@@ -19,7 +19,7 @@
 </head>
 <body>
 <div class="container">
-    <form method="post" action="/NXS/update?ma=${nxs.ma}">
+    <form method="post" action="/NXS/update?Ma=${nxs.ma}">
         <h1 style="margin: auto; width: 50%;nborder: 3px solid #008000;
   padding: 10px">Form chỉnh sửa NXS</h1>
         <div class="mb-3">

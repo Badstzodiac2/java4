@@ -1,37 +1,70 @@
 package com.example.demo3.repository;
 
-import com.example.demo3.viewmodel.QLGioHang;
+import com.example.demo3.domainmodels.GioHang;
+import com.example.demo3.utils.HibernateUtil;
+import jakarta.persistence.TypedQuery;
+import org.hibernate.Session;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class GioHangRepository {
-    private ArrayList<QLGioHang> list = new ArrayList<>();
+    private Session hSession;
 
-    public ArrayList<QLGioHang>findAll(){
-        return list;
-    }
-    public void insert (QLGioHang qlGioHang){
-        list.add(qlGioHang);
-    }
-    public void edit (QLGioHang qlGioHang){
-        for(int i =0; i<list.size(); i++){
-            QLGioHang gh = this.list.get(i);
-            if(gh.getMa().equals(qlGioHang.getMa())){
-                this.list.set(i, qlGioHang);
-            }
-        }
-    }
-    public void delete (QLGioHang gh){
-        list.remove(gh);
+    public GioHangRepository()
+    {
+        this.hSession = HibernateUtil.getFACTORY().openSession();
     }
 
-    public QLGioHang findByMa(String ma){
-        for(int i = 0; i<list.size(); i++){
-            QLGioHang gh = this.list.get(i);
-            if(gh.getMa().equals(ma)){
-                return gh;
-            }
+
+    public List<GioHang> findAll(){
+        String hql = "SELECT ghObj FROM GioHang ghObj";
+        TypedQuery<GioHang> query =
+                this.hSession.createQuery(hql, GioHang.class);
+        return query.getResultList();
+    }
+
+    public void insert (GioHang cv){
+        try {
+            this.hSession.getTransaction().begin();
+            this.hSession.persist(cv);
+            this.hSession.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            this.hSession.getTransaction().rollback();
         }
-        return null;
+    }
+    public void edit (GioHang cv){
+        try {
+            this.hSession.getTransaction().begin();
+            this.hSession.merge(cv);
+            this.hSession.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            this.hSession.getTransaction().rollback();
+        }
+    }
+    public void delete (GioHang cv){
+        try {
+            this.hSession.getTransaction().begin();
+            this.hSession.delete(cv);
+            this.hSession.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            this.hSession.getTransaction().rollback();
+        }
+    }
+
+    public GioHang findByUUID (UUID id){
+        return this.hSession.find(GioHang.class, id);
+    }
+
+    public GioHang findByMa(String ma){
+        String hql = "SELECT cvObj FROM GioHang cvObj WHERE cvObj.Ma = ?1";
+        TypedQuery<GioHang> query =
+                this.hSession.createQuery(hql, GioHang.class);
+        query.setParameter(1, ma);
+
+        return query.getSingleResult();
     }
 }

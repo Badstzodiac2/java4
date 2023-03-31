@@ -18,12 +18,12 @@
 </head>
 <body>
 <div class="container">
-    <form method="post" action="/NhanVien/update?ma=${nv.ma}">
+    <form method="post" action="/NhanVien/update?Ma=${nv.ma}">
         <h1 style="margin: auto; width: 50%;nborder: 3px solid #008000;
   padding: 10px">Form chỉnh sửa nhân viên</h1>
         <div class="mb-3">
             <label class="form-label">Mã</label>
-            <input type="text" class="form-control" value="${nv.ma}" disabled>
+            <input type="text" class="form-control" name="ma" value="${nv.ma}" disabled>
         </div>
         <div class="mb-3">
             <label class="form-label">Tên</label>
@@ -36,13 +36,13 @@
         <div class="mb-3">
             <label class="form-label">Giới tính</label>
             <div class="form-check">
-                <input class="form-check-input" type="radio" value="Nam" name="gioiTinh" ${nv.gioiTinh eq 'Nam' ? 'checked' : ''} >
+                <input class="form-check-input" type="radio" value="Nam" name="gioiTinh" ${nv.gioiTinh eq ("Nam") ? 'checked' : ''} >
                 <label class="form-check-label">
                     Nam
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" value="Nữ" name="gioiTinh" ${nv.gioiTinh eq 'Nữ' ? 'checked' : ''}>
+                <input class="form-check-input" type="radio" value="Nữ" name="gioiTinh" ${nv.gioiTinh eq ("Nữ") ? 'checked' : ''}>
                 <label class="form-check-label">
                     Nữ
                 </label>
@@ -63,13 +63,13 @@
         <div class="mb-3">
             <label class="form-label">Tình trạng</label>
             <div class="form-check">
-                <input class="form-check-input" type="radio" value="Đang làm" name="trangThai" ${nv.trangThai eq 'Đang làm' ? 'checked' : ''} >
+                <input class="form-check-input" type="radio" value="true" name="trangThai" ${nv.trangThai == true ? 'checked' : ''} >
                 <label class="form-check-label">
                     Đang làm
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" value="Nghỉ việc" name="trangThai" ${nv.trangThai eq 'Nghỉ việc' ? 'checked' : ''}>
+                <input class="form-check-input" type="radio" value="false" name="trangThai" ${nv.trangThai == false ? 'checked' : ''}>
                 <label class="form-check-label">
                     Nghỉ việc
                 </label>

@@ -1,9 +1,7 @@
 package com.example.demo3.controller;
 
+import com.example.demo3.domainmodels.CuaHang;
 import com.example.demo3.repository.CuaHangRepository;
-import com.example.demo3.viewmodel.QLChucVu;
-import com.example.demo3.viewmodel.QLCuaHang;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -23,13 +21,7 @@ import java.util.ArrayList;
 public class CuaHangServlet extends HttpServlet {
 
     public CuaHangRepository repo = new CuaHangRepository();
-
-    public CuaHangServlet(){
-        if(repo.findAll().isEmpty()){
-            repo.insert(new QLCuaHang("CH001", "Tan Thanh", "Nam Tu Liem", "Ha Noi", "Viet Nam"));
-            repo.insert(new QLCuaHang("CH002", "WinMax", "Bac Tu Liem", "Ha Noi", "Viet Nam"));
-        }
-    }
+    
 
     protected void index(
             HttpServletRequest request,
@@ -79,20 +71,16 @@ public class CuaHangServlet extends HttpServlet {
 
 
     protected void store(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException{
-
-        String ma = request.getParameter("ma");
-        String ten = request.getParameter("ten");
-        String diaChi = request.getParameter("diaChi");
-        String thanhPho = request.getParameter("thanhPho");
-        String quocGia = request.getParameter("quocGia");
-        QLCuaHang qlCuaHang = new QLCuaHang(ma, ten, diaChi, thanhPho, quocGia);
-        if(this.repo.findByMa(ma)!=null){
-            repo.edit(qlCuaHang);
+        CuaHang ch = new CuaHang();
+        try {
+            BeanUtils.populate(ch, request.getParameterMap());
+            System.out.println(ch.toString());
+            this.repo.insert(ch);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        else{
-            repo.insert(qlCuaHang);
-            System.out.println("Thêm thành công");
-        }
+        System.out.println("Thêm thành công");
+        response.sendRedirect("/CuaHang/index");
 
     }
 
@@ -102,30 +90,30 @@ public class CuaHangServlet extends HttpServlet {
     }
 
     protected void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String ma = request.getParameter("ma");
-        QLCuaHang ch = this.repo.findByMa(ma);
-        if(ch == null){
+        String ma = request.getParameter("Ma");
+        CuaHang ch = this.repo.findByMa(ma);
+        if (ch == null) {
             System.out.println("Khong tim thay");
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
-        }
-        else{
+        } else {
             this.repo.delete(ch);
             response.sendRedirect("/CuaHang/index");
         }
     }
 
     public void edit(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
-        String ma = request.getParameter("ma");
-        QLCuaHang qlCuaHang = this.repo.findByMa(ma);
-        request.setAttribute("ch", qlCuaHang);
-        request.getRequestDispatcher("/view/CuaHang/edit.jsp").forward(request,response);
+        String ma = request.getParameter("Ma");
+        CuaHang ch = this.repo.findByMa(ma);
+        request.setAttribute("ch", ch);
+        request.getRequestDispatcher("/view/CuaHang/edit.jsp").forward(request, response);
 
     }
     private void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        QLCuaHang qlch = new QLCuaHang();
+        String ma = request.getParameter("Ma");
+        CuaHang cv = this.repo.findByMa(ma);
         try {
-            BeanUtils.populate(qlch, request.getParameterMap());
-            this.repo.edit(qlch);
+            BeanUtils.populate(cv, request.getParameterMap());
+            this.repo.edit(cv);
         } catch (Exception e) {
             e.printStackTrace();
         }

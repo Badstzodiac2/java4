@@ -42,8 +42,8 @@
                 <td>${ms.ma}</td>
                 <td>${ms.ten}</td>
                 <td>
-                    <a href="/MauSac/edit?ma=${ms.ma}" target="_blank" class="btn btn-primary">Cập nhật</a>
-                    <a href="/MauSac/delete?ma=${ms.ma}" class="btn btn-danger">Xóa</a>
+                    <a href="/MauSac/edit?Ma=${ms.ma}" target="_blank" class="btn btn-primary">Cập nhật</a>
+                    <a href="/MauSac/delete?Ma=${ms.ma}" class="btn btn-danger">Xóa</a>
                 </td>
             </tr>
         </c:forEach>

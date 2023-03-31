@@ -49,8 +49,8 @@
                     <td>${ch.thanhPho}</td>
                     <td>${ch.quocGia}</td>
                     <td>
-                        <a href="/CuaHang/edit?ma=${ch.ma}" target="_blank" class="btn btn-primary">Cập nhật</a>
-                        <a href="/CuaHang/delete?ma=${ch.ma}" class="btn btn-danger">Xóa</a>
+                        <a href="/CuaHang/edit?Ma=${ch.ma}" target="_blank" class="btn btn-primary">Cập nhật</a>
+                        <a href="/CuaHang/delete?Ma=${ch.ma}" class="btn btn-danger">Xóa</a>
                     </td>
                 </tr>
             </c:forEach>

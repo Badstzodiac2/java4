@@ -1,39 +1,72 @@
 package com.example.demo3.repository;
 
+import com.example.demo3.domainmodels.NXS;
+import com.example.demo3.utils.HibernateUtil;
 import com.example.demo3.viewmodel.QLNXS;
+import jakarta.persistence.TypedQuery;
+import org.hibernate.Session;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class NXSRepositories {
-    private ArrayList<QLNXS> list = new ArrayList<>();
+    private Session hSession;
 
-    public ArrayList<QLNXS>findAll() {
-        return list;
+    public NXSRepositories()
+    {
+        this.hSession = HibernateUtil.getFACTORY().openSession();
     }
-    public void insert (QLNXS kh){
-        list.add(kh);
+
+
+    public List<NXS> findAll(){
+        String hql = "SELECT cvObj FROM NXS cvObj";
+        TypedQuery<NXS> query =
+                this.hSession.createQuery(hql, NXS.class);
+        return query.getResultList();
     }
-    public void edit (QLNXS qlkh){
-        for (int i = 0; i < this.list.size(); i++) {
-            QLNXS vm = this.list.get(i);
-            if (vm.getMa().equals(qlkh.getMa())) {
-                this.list.set(i, qlkh);
-            }
+
+    public void insert (NXS cv){
+        try {
+            this.hSession.getTransaction().begin();
+            this.hSession.persist(cv);
+            this.hSession.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            this.hSession.getTransaction().rollback();
         }
     }
-    public void delete (QLNXS kh){
-        list.remove(kh);
-    }
-    public QLNXS findByMa(String ma) {
-        {
-            for (int i = 0; i < this.list.size(); i++) {
-                QLNXS vm = this.list.get(i);
-                if (vm.getMa().equals(ma)) {
-                    return vm;
-                }
-            }
-
-            return null;
+    public void edit (NXS cv){
+        try {
+            this.hSession.getTransaction().begin();
+            this.hSession.merge(cv);
+            this.hSession.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            this.hSession.getTransaction().rollback();
         }
+    }
+    public void delete (NXS cv){
+        try {
+            this.hSession.getTransaction().begin();
+            this.hSession.delete(cv);
+            this.hSession.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            this.hSession.getTransaction().rollback();
+        }
+    }
+
+    public NXS findByUUID (UUID id){
+        return this.hSession.find(NXS.class, id);
+    }
+
+    public NXS findByMa(String ma){
+        String hql = "SELECT cvObj FROM NXS cvObj WHERE cvObj.Ma = ?1";
+        TypedQuery<NXS> query =
+                this.hSession.createQuery(hql, NXS.class);
+        query.setParameter(1, ma);
+
+        return query.getSingleResult();
     }
 }

@@ -45,8 +45,8 @@
                     <td>${ nxs.ma }</td>
                     <td>${ nxs.ten }</td>
                     <td>
-                        <a href="/NXS/edit?ma=${nxs.ma}" target="_blank" class="btn btn-primary">Cập nhật</a>
-                        <a href="/NXS/delete?ma=${nxs.ma}" class="btn btn-danger">Xóa</a>
+                        <a href="/NXS/edit?Ma=${nxs.ma}" target="_blank" class="btn btn-primary">Cập nhật</a>
+                        <a href="/NXS/delete?Ma=${nxs.ma}" class="btn btn-danger">Xóa</a>
                     </td>
                     <td>
 

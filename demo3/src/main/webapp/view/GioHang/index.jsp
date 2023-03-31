@@ -50,10 +50,13 @@
                     <td>${gh.tenNguoiNhan}</td>
                     <td>${gh.diaChi}</td>
                     <td>${gh.sdt}</td>
-                    <td>${gh.tinhTrang}</td>
                     <td>
-                        <a href="/GioHang/edit?ma=${gh.ma}" target="_blank" class="btn btn-primary">Cập nhật</a>
-                        <a href="/GioHang/delete?ma=${gh.ma}"  class="btn btn-danger">Xóa</a>
+                        <c:if test="${gh.tinhTrang == 'true'}">Đã thanh toán</c:if>
+                        <c:if test="${gh.tinhTrang == 'false'}">Chưa thanh toán</c:if>
+                    </td>
+                    <td>
+                        <a href="/GioHang/edit?Ma=${gh.ma}" target="_blank" class="btn btn-primary">Cập nhật</a>
+                        <a href="/GioHang/delete?Ma=${gh.ma}"  class="btn btn-danger">Xóa</a>
                     </td>
                 </tr>
             </c:forEach>

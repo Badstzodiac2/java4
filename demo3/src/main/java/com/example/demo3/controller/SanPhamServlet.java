@@ -1,5 +1,6 @@
 package com.example.demo3.controller;
 
+import com.example.demo3.domainmodels.SanPham;
 import com.example.demo3.repository.SanPhamRepositories;
 import com.example.demo3.viewmodel.QLSanPham;
 import jakarta.servlet.ServletException;
@@ -21,12 +22,6 @@ public class SanPhamServlet extends HttpServlet {
 
     private SanPhamRepositories repo = new SanPhamRepositories();
 
-    public SanPhamServlet(){
-        if (repo.findAll().isEmpty()) {
-            repo.insert(new QLSanPham("SP001", "Sách trẻ em"));
-            repo.insert(new QLSanPham("SP002", "Đồ chơi"));
-        }
-    }
 
     protected void index(
             HttpServletRequest request,
@@ -71,13 +66,16 @@ public class SanPhamServlet extends HttpServlet {
 
 
     protected void store(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
-        String ma = request.getParameter("ma");
-        String ten = request.getParameter("ten");
-        QLSanPham qlSanPham = new QLSanPham(ma, ten);
-        repo.insert(qlSanPham);
+        SanPham sp = new SanPham();
+        try{
+            BeanUtils.populate(sp, request.getParameterMap());
+            repo.insert(sp);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
         System.out.println("Thêm thành công");
-
+        response.sendRedirect("/SanPham/index");
     }
 
     protected void create(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -86,10 +84,11 @@ public class SanPhamServlet extends HttpServlet {
     }
 
     private void update(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        QLSanPham qlsp = new QLSanPham();
+        String ma = request.getParameter("Ma");
+        SanPham sp = repo.findByMa(ma);
         try {
-            BeanUtils.populate(qlsp, request.getParameterMap());
-            this.repo.edit(qlsp);
+            BeanUtils.populate(sp, request.getParameterMap());
+            this.repo.edit(sp);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -98,7 +97,7 @@ public class SanPhamServlet extends HttpServlet {
 
     private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String ma = request.getParameter("ma");
-        QLSanPham qlsp = this.repo.findByMa(ma);
+        SanPham qlsp = this.repo.findByMa(ma);
         if (qlsp == null) {
             System.out.println("Khong tim thay");
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -110,7 +109,7 @@ public class SanPhamServlet extends HttpServlet {
 
     private void edit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String ma = request.getParameter("ma");
-        QLSanPham qlSanPham = this.repo.findByMa(ma);
+        SanPham qlSanPham = this.repo.findByMa(ma);
         request.setAttribute("sp", qlSanPham);
         request.getRequestDispatcher("/view/SanPham/edit.jsp").forward(request, response);
     }

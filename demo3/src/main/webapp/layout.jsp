@@ -54,7 +54,7 @@
                 <a class="nav-link" style="color: black;" href="/MauSac/index">Màu sắc</a>
                 <a class="nav-link" style="color: black;" href="/ChucVu/index">Chức vụ</a>
                 <a class="nav-link" style="color: black;" href="/CuaHang/index">Cửa hàng</a></a>
-                <a class="nav-link" style="color: black;" href="/KhachHang/index">Khách hàng</a>
+                <a class="nav-link" style="color: black;" href="/DongSP/index">Dòng SP</a>
 
             </nav>
         </div>

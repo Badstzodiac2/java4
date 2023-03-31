@@ -67,13 +67,13 @@
             <div class="mb-3">
                 <label class="form-label">Tình trạng</label>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" value="Đang làm" name="tinhTrang" checked >
+                    <input class="form-check-input" type="radio" value="true" name="trangThai" checked >
                     <label class="form-check-label">
                         Đang làm
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" value="Nghỉ việc" name="tinhTrang">
+                    <input class="form-check-input" type="radio" value="false" name="trangThai">
                     <label class="form-check-label">
                         Nghỉ việc
                     </label>

@@ -43,8 +43,8 @@
                     <td>${ sp.ma }</td>
                     <td>${ sp.ten }</td>
                     <td>
-                        <a href="/SanPham/edit?ma=${sp.ma}" target="_blank" class="btn btn-primary">Cập nhật</a>
-                        <a href="/SanPham/delete?ma=${sp.ma}" class="btn btn-danger">Xóa</a>
+                        <a href="/SanPham/edit?Ma=${sp.ma}" target="_blank" class="btn btn-primary">Cập nhật</a>
+                        <a href="/SanPham/delete?Ma=${sp.ma}" class="btn btn-danger">Xóa</a>
                     </td>
                 </tr>
             </c:forEach>

@@ -1,5 +1,9 @@
 package com.example.demo3.controller;
 
+import com.example.demo3.domainmodels.NXS;
+import com.example.demo3.domainmodels.NhanVien;
+import com.example.demo3.domainmodels.NhanVien;
+import com.example.demo3.domainmodels.NhanVien;
 import com.example.demo3.repository.NhanVienRepositories;
 import com.example.demo3.viewmodel.QLNhanVien;
 import com.example.demo3.viewmodel.QLNhanVien;
@@ -24,12 +28,6 @@ import java.util.ArrayList;
 public class NhanVienServlet extends HttpServlet {
     private NhanVienRepositories repo = new NhanVienRepositories();
 
-    public NhanVienServlet() {
-        if (repo.findAll().isEmpty()) {
-            repo.insert(new QLNhanVien("PH1", "Ng", "Van", "Nam", "2020-10-20", "Hanoi", "0123123123", "123456", "Đang làm"));
-            repo.insert(new QLNhanVien("PH2", "Tran", "Van", "Nữ", "2020-10-20", "Hanoi", "0123123423", "123456", "Đang làm"));
-        }
-    }
 
     protected void index(
             HttpServletRequest request,
@@ -69,27 +67,24 @@ public class NhanVienServlet extends HttpServlet {
     }
 
     private void edit(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String ma = request.getParameter("ma");
-        QLNhanVien qlNhanVien = this.repo.findByMa(ma);
-        request.setAttribute("nv", qlNhanVien);
+        String ma = request.getParameter("Ma");
+        NhanVien nv = this.repo.findByMa(ma);
+        request.setAttribute("nv", nv);
         request.getRequestDispatcher("/view/NhanVien/edit.jsp").forward(request, response);
     }
 
 
     protected void store(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
-        String ma = request.getParameter("ma");
-        String ten = request.getParameter("ten");
-        String ho = request.getParameter(("ho"));
-        String gioiTinh = request.getParameter("gioiTinh");
-        String ngaySinh = request.getParameter("ngaySinh");
-        String diaChi = request.getParameter("diaChi");
-        String sdt = request.getParameter("sdt");
-        String matKhau = request.getParameter("matKhau");
-        String tinhTrang = request.getParameter("tinhTrang");
-        QLNhanVien qlNhanVien = new QLNhanVien(ma, ten, ho, gioiTinh, ngaySinh, diaChi, sdt, matKhau, tinhTrang);
-        repo.insert(qlNhanVien);
+        NhanVien nv = new NhanVien();
+        try {
+            BeanUtils.populate(nv, request.getParameterMap());
+            System.out.println(nv.toString());
+            this.repo.insert(nv);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         System.out.println("Thêm thành công");
+        response.sendRedirect("/NhanVien/index");
 
     }
 
@@ -99,22 +94,23 @@ public class NhanVienServlet extends HttpServlet {
     }
 
     private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String ma = request.getParameter("ma");
-        QLNhanVien kh = this.repo.findByMa(ma);
-        if (kh == null) {
+        String ma = request.getParameter("Ma");
+        NhanVien nv = this.repo.findByMa(ma);
+        if (nv == null) {
             System.out.println("Khong tim thay");
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
         } else {
-            this.repo.delete(kh);
+            this.repo.delete(nv);
             response.sendRedirect("/NhanVien/index");
         }
     }
 
     private void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        QLNhanVien qlkh = new QLNhanVien();
+        String ma = request.getParameter("Ma");
+        NhanVien nv = repo.findByMa(ma);
         try {
-            BeanUtils.populate(qlkh, request.getParameterMap());
-            this.repo.edit(qlkh);
+            BeanUtils.populate(nv, request.getParameterMap());
+            this.repo.edit(nv);
         } catch (Exception e) {
             e.printStackTrace();
         }

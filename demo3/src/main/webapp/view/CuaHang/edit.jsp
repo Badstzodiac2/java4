@@ -18,12 +18,12 @@
 </head>
 <body>
 <div class="container">
-    <form method="post" action="/CuaHang/update?ma=${ch.ma}" target="_blank">
+    <form method="post" action="/CuaHang/update?Ma=${ch.ma}" target="_blank">
         <h1 style="margin: auto; width: 50%;nborder: 3px solid #008000;
   padding: 10px">Form chỉnh sửa cửa hàng</h1>
         <div class="mb-3">
             <label class="form-label">Mã</label>
-            <input type="text" class="form-control" value="${ch.ma}" disabled>
+            <input type="text" class="form-control" name = "ma" value="${ch.ma}" disabled>
         </div>
         <div class="mb-3">
             <label class="form-label">Tên</label>

@@ -4,183 +4,204 @@ package com.example.demo3.domainmodels;
 import jakarta.persistence.*;
 
 import java.sql.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "NhanVien")
 public class NhanVien {
     @Id
     @Column(name = "Id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID Id;
 
     @Column(name = "Ma")
-    private String ma;
+    private String Ma;
 
     @Column(name = "Ten")
-    private String ten;
+    private String Ten;
 
     @Column(name = "TenDem")
-    private String tenDem;
+    private String TenDem;
 
     @Column(name = "Ho")
-    private String ho;
+    private String Ho;
 
     @Column(name = "GioiTinh")
-    private String gioiTinh;
+    private String GioiTinh;
 
     @Column(name = "NgaySinh")
-    private Date ngaySinh;
+    private Date NgaySinh;
 
     @Column(name = "DiaChi")
-    private String diaChi;
+    private String DiaChi;
 
     @Column(name = "Sdt")
-    private String sdt;
+    private String Sdt;
 
     @Column(name = "MatKhau")
-    private String matKhau;
+    private String MatKhau;
 
     @Column(name = "IdCH")
-    private String idCH;
+    private String IdCH;
 
     @Column(name = "IdCV")
-    private String idCV;
+    private String IdCV;
 
     @Column(name = "IdGuiBC")
-    private String idGuiBC;
+    private String IdGuiBC;
 
     @Column(name = "TrangThai")
-    private String trangThai;
+    private boolean TrangThai;
 
     public NhanVien() {
     }
 
-    public NhanVien(String id, String ma, String ten, String tenDem, String ho, String gioiTinh, Date ngaySinh, String diaChi, String sdt, String matKhau, String idCH, String idCV, String idGuiBC, String trangThai) {
-        this.id = id;
-        this.ma = ma;
-        this.ten = ten;
-        this.tenDem = tenDem;
-        this.ho = ho;
-        this.gioiTinh = gioiTinh;
-        this.ngaySinh = ngaySinh;
-        this.diaChi = diaChi;
-        this.sdt = sdt;
-        this.matKhau = matKhau;
-        this.idCH = idCH;
-        this.idCV = idCV;
-        this.idGuiBC = idGuiBC;
-        this.trangThai = trangThai;
+    public NhanVien(UUID id, String ma, String ten, String tenDem, String ho, String gioiTinh, Date ngaySinh, String diaChi, String sdt, String matKhau, String idCH, String idCV, String idGuiBC, boolean trangThai) {
+        Id = id;
+        Ma = ma;
+        Ten = ten;
+        TenDem = tenDem;
+        Ho = ho;
+        GioiTinh = gioiTinh;
+        NgaySinh = ngaySinh;
+        DiaChi = diaChi;
+        Sdt = sdt;
+        MatKhau = matKhau;
+        IdCH = idCH;
+        IdCV = idCV;
+        IdGuiBC = idGuiBC;
+        TrangThai = trangThai;
     }
 
-    public String getId() {
-        return id;
+    public UUID getId() {
+        return Id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(UUID id) {
+        Id = id;
     }
 
     public String getMa() {
-        return ma;
+        return Ma;
     }
 
     public void setMa(String ma) {
-        this.ma = ma;
+        Ma = ma;
     }
 
     public String getTen() {
-        return ten;
+        return Ten;
     }
 
     public void setTen(String ten) {
-        this.ten = ten;
+        Ten = ten;
     }
 
     public String getTenDem() {
-        return tenDem;
+        return TenDem;
     }
 
     public void setTenDem(String tenDem) {
-        this.tenDem = tenDem;
+        TenDem = tenDem;
     }
 
     public String getHo() {
-        return ho;
+        return Ho;
     }
 
     public void setHo(String ho) {
-        this.ho = ho;
+        Ho = ho;
     }
 
     public String getGioiTinh() {
-        return gioiTinh;
+        return GioiTinh;
     }
 
     public void setGioiTinh(String gioiTinh) {
-        this.gioiTinh = gioiTinh;
+        GioiTinh = gioiTinh;
     }
 
     public Date getNgaySinh() {
-        return ngaySinh;
+        return NgaySinh;
     }
 
     public void setNgaySinh(Date ngaySinh) {
-        this.ngaySinh = ngaySinh;
+        NgaySinh = ngaySinh;
     }
 
     public String getDiaChi() {
-        return diaChi;
+        return DiaChi;
     }
 
     public void setDiaChi(String diaChi) {
-        this.diaChi = diaChi;
+        DiaChi = diaChi;
     }
 
     public String getSdt() {
-        return sdt;
+        return Sdt;
     }
 
     public void setSdt(String sdt) {
-        this.sdt = sdt;
+        Sdt = sdt;
     }
 
     public String getMatKhau() {
-        return matKhau;
+        return MatKhau;
     }
 
     public void setMatKhau(String matKhau) {
-        this.matKhau = matKhau;
+        MatKhau = matKhau;
     }
 
     public String getIdCH() {
-        return idCH;
+        return IdCH;
     }
 
     public void setIdCH(String idCH) {
-        this.idCH = idCH;
+        IdCH = idCH;
     }
 
     public String getIdCV() {
-        return idCV;
+        return IdCV;
     }
 
     public void setIdCV(String idCV) {
-        this.idCV = idCV;
+        IdCV = idCV;
     }
 
     public String getIdGuiBC() {
-        return idGuiBC;
+        return IdGuiBC;
     }
 
     public void setIdGuiBC(String idGuiBC) {
-        this.idGuiBC = idGuiBC;
+        IdGuiBC = idGuiBC;
     }
 
-    public String getTrangThai() {
-        return trangThai;
+    public boolean isTrangThai() {
+        return TrangThai;
     }
 
-    public void setTrangThai(String trangThai) {
-        this.trangThai = trangThai;
+    public void setTrangThai(boolean trangThai) {
+        TrangThai = trangThai;
+    }
+
+    @Override
+    public String toString() {
+        return "NhanVien{" +
+                "Id=" + Id +
+                ", Ma='" + Ma + '\'' +
+                ", Ten='" + Ten + '\'' +
+                ", TenDem='" + TenDem + '\'' +
+                ", Ho='" + Ho + '\'' +
+                ", GioiTinh='" + GioiTinh + '\'' +
+                ", NgaySinh=" + NgaySinh +
+                ", DiaChi='" + DiaChi + '\'' +
+                ", Sdt='" + Sdt + '\'' +
+                ", MatKhau='" + MatKhau + '\'' +
+                ", IdCH='" + IdCH + '\'' +
+                ", IdCV='" + IdCV + '\'' +
+                ", IdGuiBC='" + IdGuiBC + '\'' +
+                ", TrangThai=" + TrangThai +
+                '}';
     }
 }

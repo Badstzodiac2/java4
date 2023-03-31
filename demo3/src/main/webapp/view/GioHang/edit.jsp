@@ -17,12 +17,12 @@
 </head>
 <body>
 <div class="container">
-    <form method="post" action="/GioHang/update?ma=${gh.ma}" target="_blank">
+    <form method="post" action="/GioHang/update?Ma=${gh.ma}" target="_blank">
         <h1 style="margin: auto; width: 50%;nborder: 3px solid #008000;
   padding: 10px">Form chỉnh sửa giỏ hàng</h1>
         <div class="mb-3">
             <label class="form-label">Mã</label>
-            <input type="text" class="form-control" value="${gh.ma}" disabled>
+            <input type="text" class="form-control" name="ma" value="${gh.ma}" disabled>
         </div>
         <div class="mb-3">
             <label class="form-label">Ngày tạo</label>
@@ -47,13 +47,13 @@
         <div class="mb-3">
             <label class="form-label">Tình trạng</label>
             <div class="form-check">
-                <input class="form-check-input" type="radio" value="Đã thanh toán" name="tinhTrang" ${gh.tinhTrang eq 'Đã thanh toán' ? 'checked' : ''} >
+                <input class="form-check-input" type="radio" value="true" name="tinhTrang" ${gh.tinhTrang == true ? 'checked' : ''} >
                 <label class="form-check-label">
                     Đã thanh toán
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" value="Chưa thanh toán" name="tinhTrang" ${gh.tinhTrang eq 'Chưa thanh toán' ? 'checked' : ''}>
+                <input class="form-check-input" type="radio" value="false" name="tinhTrang" ${gh.tinhTrang == false ? 'checked' : ''}>
                 <label class="form-check-label">
                     Chưa thanh toán
                 </label>
@@ -61,7 +61,7 @@
         </div>
 
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Sửa</button>
     </form>
 </div>
 </body>

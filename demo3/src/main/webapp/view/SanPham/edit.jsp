@@ -17,7 +17,7 @@
 </head>
 <body>
 <div class="container">
-    <form method="post" action="store">
+    <form method="post" action="SanPham/update?Ma=${sp.ma}">
         <h1 style="margin: auto; width: 50%;nborder: 3px solid #008000;
   padding: 10px">Form chỉnh sửa sản phẩm</h1>
         <div class="mb-3">

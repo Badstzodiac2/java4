@@ -4,135 +4,152 @@ package com.example.demo3.domainmodels;
 import jakarta.persistence.*;
 
 import java.sql.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "GioHang")
 public class GioHang {
     @Id
     @Column(name = "Id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID Id;
 
     @Column(name = "IdKH")
-    private String idKH;
+    private String IdKH;
 
     @Column(name = "IdNV")
-    private String idNV;
+    private String IdNV;
 
     @Column(name = "Ma")
-    private String ma;
+    private String Ma;
 
     @Column(name = "NgayTao")
-    private Date ngayTao;
+    private Date NgayTao;
 
     @Column(name = "NgayThanhToan")
-    private Date ngayThanhToan;
+    private Date NgayThanhToan;
 
     @Column(name = "TenNguoiNhan")
-    private String tenNguoiNhan;
+    private String TenNguoiNhan;
 
     @Column(name = "DiaChi")
-    private String diaChi;
+    private String DiaChi;
 
     @Column(name = "Sdt")
-    private String sdt;
+    private String Sdt;
 
     @Column(name = "TinhTrang")
-    private boolean tinhTrang;
+    private boolean TinhTrang;
 
     public GioHang() {
     }
 
-    public GioHang(String id, String idKH, String idNV, String ma, Date ngayTao, Date ngayThanhToan, String tenNguoiNhan, String diaChi, String sdt, boolean tinhTrang) {
-        this.id = id;
-        this.idKH = idKH;
-        this.idNV = idNV;
-        this.ma = ma;
-        this.ngayTao = ngayTao;
-        this.ngayThanhToan = ngayThanhToan;
-        this.tenNguoiNhan = tenNguoiNhan;
-        this.diaChi = diaChi;
-        this.sdt = sdt;
-        this.tinhTrang = tinhTrang;
+    public GioHang(UUID id, String idKH, String idNV, String ma, Date ngayTao, Date ngayThanhToan, String tenNguoiNhan, String diaChi, String sdt, boolean tinhTrang) {
+        Id = id;
+        IdKH = idKH;
+        IdNV = idNV;
+        Ma = ma;
+        NgayTao = ngayTao;
+        NgayThanhToan = ngayThanhToan;
+        TenNguoiNhan = tenNguoiNhan;
+        DiaChi = diaChi;
+        Sdt = sdt;
+        TinhTrang = tinhTrang;
     }
 
-    public String getId() {
-        return id;
+    public UUID getId() {
+        return Id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(UUID id) {
+        Id = id;
     }
 
     public String getIdKH() {
-        return idKH;
+        return IdKH;
     }
 
     public void setIdKH(String idKH) {
-        this.idKH = idKH;
+        IdKH = idKH;
     }
 
     public String getIdNV() {
-        return idNV;
+        return IdNV;
     }
 
     public void setIdNV(String idNV) {
-        this.idNV = idNV;
+        IdNV = idNV;
     }
 
     public String getMa() {
-        return ma;
+        return Ma;
     }
 
     public void setMa(String ma) {
-        this.ma = ma;
+        Ma = ma;
     }
 
     public Date getNgayTao() {
-        return ngayTao;
+        return NgayTao;
     }
 
     public void setNgayTao(Date ngayTao) {
-        this.ngayTao = ngayTao;
+        NgayTao = ngayTao;
     }
 
     public Date getNgayThanhToan() {
-        return ngayThanhToan;
+        return NgayThanhToan;
     }
 
     public void setNgayThanhToan(Date ngayThanhToan) {
-        this.ngayThanhToan = ngayThanhToan;
+        NgayThanhToan = ngayThanhToan;
     }
 
     public String getTenNguoiNhan() {
-        return tenNguoiNhan;
+        return TenNguoiNhan;
     }
 
     public void setTenNguoiNhan(String tenNguoiNhan) {
-        this.tenNguoiNhan = tenNguoiNhan;
+        TenNguoiNhan = tenNguoiNhan;
     }
 
     public String getDiaChi() {
-        return diaChi;
+        return DiaChi;
     }
 
     public void setDiaChi(String diaChi) {
-        this.diaChi = diaChi;
+        DiaChi = diaChi;
     }
 
     public String getSdt() {
-        return sdt;
+        return Sdt;
     }
 
     public void setSdt(String sdt) {
-        this.sdt = sdt;
+        Sdt = sdt;
     }
 
     public boolean isTinhTrang() {
-        return tinhTrang;
+        return TinhTrang;
     }
 
     public void setTinhTrang(boolean tinhTrang) {
-        this.tinhTrang = tinhTrang;
+        TinhTrang = tinhTrang;
+    }
+
+    @Override
+    public String toString() {
+        return "GioHang{" +
+                "Id='" + Id + '\'' +
+                ", IdKH='" + IdKH + '\'' +
+                ", IdNV='" + IdNV + '\'' +
+                ", Ma='" + Ma + '\'' +
+                ", NgayTao=" + NgayTao +
+                ", NgayThanhToan=" + NgayThanhToan +
+                ", TenNguoiNhan='" + TenNguoiNhan + '\'' +
+                ", DiaChi='" + DiaChi + '\'' +
+                ", Sdt='" + Sdt + '\'' +
+                ", TinhTrang=" + TinhTrang +
+                '}';
     }
 }
