@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.apache.commons.beanutils.BeanUtils;
 
 import java.io.IOException;
@@ -74,13 +75,20 @@ public class CuaHangServlet extends HttpServlet {
         CuaHang ch = new CuaHang();
         try {
             BeanUtils.populate(ch, request.getParameterMap());
-            System.out.println(ch.toString());
-            this.repo.insert(ch);
+            HttpSession session = request.getSession();
+            if (ch.getMa().isEmpty()||ch.getTen().isEmpty()) {
+                session.setAttribute("errorMessage", "Vui lòng nhập đủ dữ liệu");
+                response.sendRedirect("/CuaHang/create");
+            } else {
+                session.setAttribute("ch", ch);
+                System.out.println("Thêm thành công");
+                System.out.println(ch.toString());
+                this.repo.insert(ch);
+                response.sendRedirect("/CuaHang/index");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("Thêm thành công");
-        response.sendRedirect("/CuaHang/index");
 
     }
 

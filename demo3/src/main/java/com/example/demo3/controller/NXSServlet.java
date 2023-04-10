@@ -9,6 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.apache.commons.beanutils.BeanUtils;
 
 import java.io.IOException;
@@ -51,7 +52,7 @@ public class NXSServlet extends HttpServlet {
     }
 
     private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String ma = request.getParameter("ma");
+        String ma = request.getParameter("Ma");
         NXS nxs = this.repo.findByMa(ma);
         if (nxs == null) {
             System.out.println("Khong tim thay");
@@ -97,16 +98,25 @@ public class NXSServlet extends HttpServlet {
 
     protected void store(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException{
         NXS nxs = new NXS();
-        try{
+        try {
             BeanUtils.populate(nxs, request.getParameterMap());
-            repo.insert(nxs);
+            HttpSession session = request.getSession();
+            if (nxs.getMa()==null || nxs.getTen()==null) {
+                session.setAttribute("errorMessage", "Vui lòng nhập đủ dữ liệu");
+                response.sendRedirect("/NXS/create");
+            } else {
+                session.setAttribute("nxs", nxs);
+                System.out.println("Thêm thành công");
+                System.out.println(nxs.toString());
+                this.repo.insert(nxs);
+                response.sendRedirect("/NXS/index");
+
+            }
+
         }
-        catch(Exception e){
+        catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("Thêm thành công");
-        response.sendRedirect("/NXS/index");
-
     }
     public void destroy() {
     }

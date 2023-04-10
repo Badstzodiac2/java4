@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.apache.commons.beanutils.BeanUtils;
 
 import java.io.IOException;
@@ -70,14 +71,23 @@ public class GioHangServlet extends HttpServlet {
         GioHang gh = new GioHang();
         try {
             BeanUtils.populate(gh, request.getParameterMap());
-            System.out.println(gh.toString());
-            this.repo.insert(gh);
+            HttpSession session = request.getSession();
+            if (gh.getMa().isEmpty()||gh.getTenNguoiNhan().isEmpty()||gh.getNgayTao()==null||gh.getSdt().isEmpty()) {
+                session.setAttribute("errorMessage", "Vui lòng nhập đủ dữ liệu");
+                response.sendRedirect("/MauSac/create");
+            } else {
+                session.setAttribute("gh", gh);
+                System.out.println("Thêm thành công");
+                System.out.println(gh.toString());
+                this.repo.insert(gh);
+                response.sendRedirect("/GioHang/index");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        repo.insert(gh);
-        System.out.println("Thêm thành công");
-        response.sendRedirect("/GioHang/index");
+//        repo.insert(gh);
+//        System.out.println("Thêm thành công");
+//        response.sendRedirect("/GioHang/index");
 
     }
 

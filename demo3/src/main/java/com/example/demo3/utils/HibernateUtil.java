@@ -1,12 +1,16 @@
 package com.example.demo3.utils;
 
 import com.example.demo3.domainmodels.*;
+import com.example.demo3.repository.ChucVuRepositories;
+import jakarta.persistence.TypedQuery;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
+import java.util.List;
 import java.util.Properties;
 
 public class HibernateUtil {
@@ -24,6 +28,7 @@ public class HibernateUtil {
 
         conf.setProperties(properties);
         conf.addAnnotatedClass(KhachHang.class);
+        conf.addAnnotatedClass(SanPham.class);
         conf.addAnnotatedClass(MauSac.class);
         conf.addAnnotatedClass(ChucVu.class);
         conf.addAnnotatedClass(CuaHang.class);
@@ -31,6 +36,7 @@ public class HibernateUtil {
         conf.addAnnotatedClass(GioHang.class);
         conf.addAnnotatedClass(DongSP.class);
         conf.addAnnotatedClass(NhanVien.class);
+        conf.addAnnotatedClass(ChiTietSP.class);
 
         ServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .applySettings(conf.getProperties()).build();
@@ -44,5 +50,15 @@ public class HibernateUtil {
 
     public static void main(String[] args) {
         System.out.println(getFACTORY());
+        Session session = getFACTORY().openSession();
+        String hql = "SELECT obj FROM ChucVu obj WHERE obj.Ma = ?1";
+        TypedQuery<ChucVu> query = session.createQuery(hql, ChucVu.class);
+        query.setParameter(1, "12345");
+        ChucVu cv = query.getSingleResult();
+        System.out.println("Chuc vu: " + cv.getTen() + cv.getId());
+
+        List<NhanVien> list = cv.getListNv();
+        System.out.println("TenNV: " + list.get(0).getTen());
+
     }
 }

@@ -33,6 +33,9 @@
                             <li class="nav-item">
                                 <a class="nav-link active" href="/GioHang/create" target="_blank">Giỏ hàng</a>
                             </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/login" target="_blank">Đăng nhập</a>
+                        </li>
                     </ul>
                 </div>
             </div>

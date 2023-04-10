@@ -5,7 +5,7 @@
   Time: 1:29 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" session="true"%>
 <html>
 <head>
     <title>Form khách hàng</title>
@@ -17,7 +17,9 @@
 
 </head>
 <body>
-
+    <c:if test="${ not empty errorMessage }">
+        <div class="alert alert-danger">${ errorMessage }</div>
+    </c:if>
     <div class="container">
         <form method="post" action="/KhachHang/store" target="_blank">
             <h1>Form tạo mới khách hàng</h1>

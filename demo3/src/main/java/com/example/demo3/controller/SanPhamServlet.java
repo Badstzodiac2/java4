@@ -8,6 +8,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.apache.commons.beanutils.BeanUtils;
 
 import java.io.IOException;
@@ -69,7 +70,17 @@ public class SanPhamServlet extends HttpServlet {
         SanPham sp = new SanPham();
         try{
             BeanUtils.populate(sp, request.getParameterMap());
-            repo.insert(sp);
+            HttpSession session = request.getSession();
+            if (sp.getMa().isEmpty()||sp.getTen().isEmpty()) {
+                session.setAttribute("errorMessage", "Vui lòng nhập đủ dữ liệu");
+                response.sendRedirect("/SanPham/create");
+            } else {
+                session.setAttribute("sp", sp);
+                System.out.println("Thêm thành công");
+                System.out.println(sp.toString());
+                this.repo.insert(sp);
+                response.sendRedirect("/SanPham/index");
+            }
         }
         catch (Exception e){
             e.printStackTrace();
@@ -96,7 +107,7 @@ public class SanPhamServlet extends HttpServlet {
     }
 
     private void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String ma = request.getParameter("ma");
+        String ma = request.getParameter("Ma");
         SanPham qlsp = this.repo.findByMa(ma);
         if (qlsp == null) {
             System.out.println("Khong tim thay");
@@ -108,7 +119,7 @@ public class SanPhamServlet extends HttpServlet {
     }
 
     private void edit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String ma = request.getParameter("ma");
+        String ma = request.getParameter("Ma");
         SanPham qlSanPham = this.repo.findByMa(ma);
         request.setAttribute("sp", qlSanPham);
         request.getRequestDispatcher("/view/SanPham/edit.jsp").forward(request, response);

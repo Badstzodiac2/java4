@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.apache.commons.beanutils.BeanUtils;
 
 import java.io.IOException;
@@ -67,13 +68,22 @@ public class DongSPServlet extends HttpServlet {
         DongSP dsp = new DongSP();
         try {
             BeanUtils.populate(dsp, request.getParameterMap());
-            System.out.println(dsp.toString());
-            this.repo.insert(dsp);
+            HttpSession session = request.getSession();
+            if (dsp.getMa().isEmpty()||dsp.getTen().isEmpty()) {
+                session.setAttribute("errorMessage", "Vui lòng nhập đủ dữ liệu");
+                response.sendRedirect("/DongSP/create");
+            } else {
+                session.setAttribute("dsp", dsp);
+                System.out.println("Thêm thành công");
+                System.out.println(dsp.toString());
+                this.repo.insert(dsp);
+                response.sendRedirect("/DongSP/index");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("Thêm thành công");
-        response.sendRedirect("/DongSP/index");
+//        System.out.println("Thêm thành công");
+//        response.sendRedirect("/DongSP/index");
 
 
     }

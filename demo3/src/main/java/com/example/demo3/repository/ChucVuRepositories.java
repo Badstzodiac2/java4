@@ -70,4 +70,8 @@ public class ChucVuRepositories {
 
         return query.getSingleResult();
     }
+
+    public static void main(String[] args) {
+        System.out.println(new ChucVuRepositories().findAll());
+    }
 }

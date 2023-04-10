@@ -2,6 +2,7 @@ package com.example.demo3.domainmodels;
 
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -26,6 +27,9 @@ public class CuaHang {
 
     @Column(name = "QuocGia")
     private String QuocGia;
+
+    @OneToMany(mappedBy = "ch", fetch = FetchType.LAZY)
+    private List<NhanVien> listNv;
 
     public CuaHang() {
     }

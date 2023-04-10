@@ -6,6 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
 <html>
 <head>
     <title>Title</title>
@@ -17,31 +20,38 @@
 </head>
 <body>
     <div class="container">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: rgba(127,173,57,255)">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Dashboard</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" href="#">Navbar w/ text</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse" id="navbarText">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/home" target="_blank">Trang chủ</a>
+                            <a class="nav-link active" aria-current="page" href="#">Hóa đơn</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="/ChucVu/create" target="_blank">Chức vụ</a>
+                            <a class="nav-link" href="/GioHang/index">Giỏ hàng</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="/GioHang/create" target="_blank">Giỏ hàng</a>
+                            <c:if test="${empty nv}">
+                                <a class="nav-link" href="/login">Đăng nhập</a>
+                            </c:if>
+                            <c:if test="${not empty nv}">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
+                            </c:if>
                         </li>
-
                     </ul>
+                    <span class="navbar-text dropdown">
+                        <c:if test="${not empty nv}">
+                            Welcome, ${nv.ten}!
+                        </c:if>
+                </span>
                 </div>
             </div>
         </nav>
-        <br>
+            <br>
         <br>
 
         <div class="nav flex-column" style="width: 25%; float: left; border: blue 2px">
@@ -55,7 +65,7 @@
                 <a class="nav-link" style="color: black;" href="/ChucVu/index">Chức vụ</a>
                 <a class="nav-link" style="color: black;" href="/CuaHang/index">Cửa hàng</a></a>
                 <a class="nav-link" style="color: black;" href="/DongSP/index">Dòng SP</a>
-
+                <a class="nav-link" style="color: black;" href="/ChiTietSP/index">Chi tiết SP</a>
             </nav>
         </div>
 

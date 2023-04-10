@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="f" uri="jakarta.tags.functions" %>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
@@ -30,6 +32,10 @@
             <input type="text" class="form-control" name="ten" value="${nv.ten}">
         </div>
         <div class="mb-3">
+            <label class="form-label">Tên đệm</label>
+            <input type="text" class="form-control" name="tenDem" value="${nv.tenDem}">
+        </div>
+        <div class="mb-3">
             <label class="form-label">Họ</label>
             <input type="text" class="form-control" name="ho" value="${nv.ho}">
         </div>
@@ -51,6 +57,20 @@
         <div class="mb-3">
             <label class="form-label">Ngày sinh</label>
             <input type="date" class="form-control" name="ngaySinh" value="${nv.ngaySinh}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Chức vụ</label>
+            <select name="chucVu" id="" class="form-select">
+                <c:forEach items="${positions}" var="cv">
+                    <option value="${cv.ma}">${cv.ten}</option></c:forEach>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Cửa hàng</label>
+            <select name="cuaHang" id="" class="form-select">
+                <c:forEach items="${listCuaHang}" var="ch">
+                    <option value="${ch.ma}">${ch.ten}</option></c:forEach>
+            </select>
         </div>
         <div class="mb-3">
             <label class="form-label">SĐT</label>

@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.apache.commons.beanutils.BeanUtils;
 
 import java.io.IOException;
@@ -73,12 +74,23 @@ public class MauSacServlet extends HttpServlet {
         try {
             BeanUtils.populate(ms, request.getParameterMap());
             System.out.println(ms.toString());
-            this.repo.insert(ms);
+            HttpSession session = request.getSession();
+            if (ms.getMa().isEmpty()||ms.getTen().isEmpty()) {
+                session.setAttribute("errorMessage", "Vui lòng nhập đủ dữ liệu");
+                response.sendRedirect("/MauSac/create");
+            } else {
+                session.setAttribute("ms", ms);
+                System.out.println("Thêm thành công");
+                System.out.println(ms.toString());
+                this.repo.insert(ms);
+                response.sendRedirect("/MauSac/index");
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("Thêm thành công");
-        response.sendRedirect("/MauSac/index");
+//        System.out.println("Thêm thành công");
+//        response.sendRedirect("/MauSac/index");
 
     }
 

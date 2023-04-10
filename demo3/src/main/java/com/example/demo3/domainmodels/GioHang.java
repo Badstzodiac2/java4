@@ -14,9 +14,6 @@ public class GioHang {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID Id;
 
-    @Column(name = "IdKH")
-    private String IdKH;
-
     @Column(name = "IdNV")
     private String IdNV;
 
@@ -41,12 +38,19 @@ public class GioHang {
     @Column(name = "TinhTrang")
     private boolean TinhTrang;
 
+    @ManyToOne()
+    @JoinColumn(
+            name="IdKH",
+            referencedColumnName = "Id",
+            nullable = true
+    )
+    private KhachHang kh;
+
     public GioHang() {
     }
 
-    public GioHang(UUID id, String idKH, String idNV, String ma, Date ngayTao, Date ngayThanhToan, String tenNguoiNhan, String diaChi, String sdt, boolean tinhTrang) {
+    public GioHang(UUID id, String idNV, String ma, Date ngayTao, Date ngayThanhToan, String tenNguoiNhan, String diaChi, String sdt, boolean tinhTrang, KhachHang kh) {
         Id = id;
-        IdKH = idKH;
         IdNV = idNV;
         Ma = ma;
         NgayTao = ngayTao;
@@ -55,6 +59,7 @@ public class GioHang {
         DiaChi = diaChi;
         Sdt = sdt;
         TinhTrang = tinhTrang;
+        this.kh = kh;
     }
 
     public UUID getId() {
@@ -65,12 +70,12 @@ public class GioHang {
         Id = id;
     }
 
-    public String getIdKH() {
-        return IdKH;
+    public KhachHang getKh() {
+        return kh;
     }
 
-    public void setIdKH(String idKH) {
-        IdKH = idKH;
+    public void setKh(KhachHang kh) {
+        this.kh = kh;
     }
 
     public String getIdNV() {
@@ -140,8 +145,7 @@ public class GioHang {
     @Override
     public String toString() {
         return "GioHang{" +
-                "Id='" + Id + '\'' +
-                ", IdKH='" + IdKH + '\'' +
+                "Id=" + Id +
                 ", IdNV='" + IdNV + '\'' +
                 ", Ma='" + Ma + '\'' +
                 ", NgayTao=" + NgayTao +
@@ -150,6 +154,7 @@ public class GioHang {
                 ", DiaChi='" + DiaChi + '\'' +
                 ", Sdt='" + Sdt + '\'' +
                 ", TinhTrang=" + TinhTrang +
+                ", kh=" + kh +
                 '}';
     }
 }

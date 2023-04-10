@@ -28,7 +28,7 @@
             <label class="form-label">Tên</label>
             <input type="text" class="form-control" name = "ten" value="${sp.ten}">
         </div>
-        <button type="submit" class="btn btn-primary">Add</button>
+        <button type="submit" class="btn btn-primary">Sửa</button>
     </form>
 </body>
 </html>

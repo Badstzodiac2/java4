@@ -1,23 +1,21 @@
 package com.example.demo3.controller;
 
-import com.example.demo3.domainmodels.NXS;
+import com.example.demo3.domainmodels.*;
 import com.example.demo3.domainmodels.NhanVien;
-import com.example.demo3.domainmodels.NhanVien;
-import com.example.demo3.domainmodels.NhanVien;
+import com.example.demo3.repository.ChucVuRepositories;
+import com.example.demo3.repository.CuaHangRepository;
 import com.example.demo3.repository.NhanVienRepositories;
-import com.example.demo3.viewmodel.QLNhanVien;
-import com.example.demo3.viewmodel.QLNhanVien;
-import com.example.demo3.viewmodel.QLNhanVien;
-import com.example.demo3.viewmodel.QLNhanVien;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.apache.commons.beanutils.BeanUtils;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @WebServlet({"/NhanVien/index",
         "/NhanVien/create",
@@ -27,7 +25,8 @@ import java.util.ArrayList;
         "/NhanVien/delete",})
 public class NhanVienServlet extends HttpServlet {
     private NhanVienRepositories repo = new NhanVienRepositories();
-
+    private ChucVuRepositories chucVuRepo = new ChucVuRepositories();
+    private CuaHangRepository cuaHangRepo = new CuaHangRepository();
 
     protected void index(
             HttpServletRequest request,
@@ -70,6 +69,10 @@ public class NhanVienServlet extends HttpServlet {
         String ma = request.getParameter("Ma");
         NhanVien nv = this.repo.findByMa(ma);
         request.setAttribute("nv", nv);
+        List<ChucVu> positions = this.chucVuRepo.findAll();
+        List<CuaHang> listCuaHang = this.cuaHangRepo.findAll();
+        request.setAttribute("positions", positions);
+        request.setAttribute("listCuaHang", listCuaHang);
         request.getRequestDispatcher("/view/NhanVien/edit.jsp").forward(request, response);
     }
 
@@ -78,17 +81,29 @@ public class NhanVienServlet extends HttpServlet {
         NhanVien nv = new NhanVien();
         try {
             BeanUtils.populate(nv, request.getParameterMap());
-            System.out.println(nv.toString());
-            this.repo.insert(nv);
+            nv.setCv(new ChucVuRepositories().findByMa(request.getParameter("chucVu")));
+            nv.setCh(new CuaHangRepository().findByMa(request.getParameter("cuaHang")));
+            HttpSession session = request.getSession();
+            if (nv.getMa().isEmpty()||nv.getTen().isEmpty()||nv.getMatKhau().isEmpty()||nv.getNgaySinh()==null) {
+                session.setAttribute("errorMessage", "Vui lòng nhập đủ dữ liệu");
+                response.sendRedirect("/NhanVien/create");
+            } else {
+                session.setAttribute("nv", nv);
+                this.repo.insert(nv);
+                System.out.println("Thêm thành công");
+                response.sendRedirect("/NhanVien/index");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("Thêm thành công");
-        response.sendRedirect("/NhanVien/index");
 
     }
 
     protected void create(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<ChucVu> positions = this.chucVuRepo.findAll();
+        List<CuaHang> listCuaHang = this.cuaHangRepo.findAll();
+        request.setAttribute("positions", positions);
+        request.setAttribute("listCuaHang", listCuaHang);
         request.getRequestDispatcher("/view/NhanVien/create.jsp").forward(request, response);
 
     }

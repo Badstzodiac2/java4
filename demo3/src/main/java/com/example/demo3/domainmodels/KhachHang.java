@@ -3,6 +3,7 @@ package com.example.demo3.domainmodels;
 import jakarta.persistence.*;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -43,10 +44,13 @@ public class KhachHang {
     @Column(name="MatKhau")
     private String MatKhau;
 
+    @OneToMany(mappedBy = "kh")
+    private List<GioHang> listGioHang;
+
     public KhachHang() {
     }
 
-    public KhachHang(UUID id, String ma, String ten, String tenDem, String ho, Date ngaySinh, String sdt, String diaChi, String thanhPho, String quocGia, String matKhau) {
+    public KhachHang(UUID id, String ma, String ten, String tenDem, String ho, Date ngaySinh, String sdt, String diaChi, String thanhPho, String quocGia, String matKhau, List<GioHang> listGioHang) {
         Id = id;
         Ma = ma;
         Ten = ten;
@@ -58,6 +62,7 @@ public class KhachHang {
         ThanhPho = thanhPho;
         QuocGia = quocGia;
         MatKhau = matKhau;
+        this.listGioHang = listGioHang;
     }
 
     public UUID getId() {
@@ -146,6 +151,14 @@ public class KhachHang {
 
     public void setMatKhau(String matKhau) {
         MatKhau = matKhau;
+    }
+
+    public List<GioHang> getListGioHang() {
+        return listGioHang;
+    }
+
+    public void setListGioHang(List<GioHang> listGioHang) {
+        this.listGioHang = listGioHang;
     }
 
     @Override

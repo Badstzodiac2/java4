@@ -41,11 +41,22 @@ public class NhanVien {
     @Column(name = "MatKhau")
     private String MatKhau;
 
-    @Column(name = "IdCH")
-    private String IdCH;
+    @ManyToOne()
+    @JoinColumn(
+            name="IdCH",
+            referencedColumnName = "Id",
+            nullable = true
+    )
+    private CuaHang ch;
 
-    @Column(name = "IdCV")
-    private String IdCV;
+
+    @ManyToOne()
+    @JoinColumn(
+            name="IdCV",
+            referencedColumnName = "Id",
+            nullable = true
+    )
+    private ChucVu cv;
 
     @Column(name = "IdGuiBC")
     private String IdGuiBC;
@@ -56,7 +67,7 @@ public class NhanVien {
     public NhanVien() {
     }
 
-    public NhanVien(UUID id, String ma, String ten, String tenDem, String ho, String gioiTinh, Date ngaySinh, String diaChi, String sdt, String matKhau, String idCH, String idCV, String idGuiBC, boolean trangThai) {
+    public NhanVien(UUID id, String ma, String ten, String tenDem, String ho, String gioiTinh, Date ngaySinh, String diaChi, String sdt, String matKhau, CuaHang ch, ChucVu cv, String idGuiBC, boolean trangThai) {
         Id = id;
         Ma = ma;
         Ten = ten;
@@ -67,8 +78,8 @@ public class NhanVien {
         DiaChi = diaChi;
         Sdt = sdt;
         MatKhau = matKhau;
-        IdCH = idCH;
-        IdCV = idCV;
+        this.ch = ch;
+        this.cv = cv;
         IdGuiBC = idGuiBC;
         TrangThai = trangThai;
     }
@@ -153,20 +164,20 @@ public class NhanVien {
         MatKhau = matKhau;
     }
 
-    public String getIdCH() {
-        return IdCH;
+    public CuaHang getCh() {
+        return ch;
     }
 
-    public void setIdCH(String idCH) {
-        IdCH = idCH;
+    public void setCh(CuaHang ch) {
+        this.ch = ch;
     }
 
-    public String getIdCV() {
-        return IdCV;
+    public ChucVu getCv() {
+        return cv;
     }
 
-    public void setIdCV(String idCV) {
-        IdCV = idCV;
+    public void setCv(ChucVu cv) {
+        this.cv = cv;
     }
 
     public String getIdGuiBC() {
@@ -198,8 +209,8 @@ public class NhanVien {
                 ", DiaChi='" + DiaChi + '\'' +
                 ", Sdt='" + Sdt + '\'' +
                 ", MatKhau='" + MatKhau + '\'' +
-                ", IdCH='" + IdCH + '\'' +
-                ", IdCV='" + IdCV + '\'' +
+                ", ch=" + ch +
+                ", cv=" + cv +
                 ", IdGuiBC='" + IdGuiBC + '\'' +
                 ", TrangThai=" + TrangThai +
                 '}';

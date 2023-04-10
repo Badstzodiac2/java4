@@ -71,13 +71,22 @@ public class KhachHangServlet extends HttpServlet {
         KhachHang kh = new KhachHang();
         try {
             BeanUtils.populate(kh, request.getParameterMap());
-            System.out.println(kh.toString());
-            this.repo.insert(kh);
+            HttpSession session = request.getSession();
+            if (kh.getMa().isEmpty()||kh.getTen().isEmpty()||kh.getMatKhau().isEmpty()||kh.getNgaySinh()==null) {
+                session.setAttribute("errorMessage", "Vui lòng nhập đủ dữ liệu");
+                response.sendRedirect("/KhachHang/create");
+            } else {
+                session.setAttribute("kh", kh);
+                System.out.println("Thêm thành công");
+                System.out.println(kh.toString());
+                this.repo.insert(kh);
+                response.sendRedirect("/KhachHang/index");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("Thêm thành công");
-        response.sendRedirect("/KhachHang/index");
+//        System.out.println("Thêm thành công");
+//        response.sendRedirect("/KhachHang/index");
 
     }
 

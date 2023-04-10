@@ -62,11 +62,14 @@ public class SanPhamRepositories {
     }
 
     public SanPham findByMa(String ma){
-        String hql = "SELECT cvObj FROM SanPham cvObj WHERE cvObj.Ma = ?1";
+        String hql = "SELECT spObj FROM SanPham spObj WHERE spObj.Ma = :MA";
         TypedQuery<SanPham> query =
                 this.hSession.createQuery(hql, SanPham.class);
-        query.setParameter(1, ma);
-
+        query.setParameter("MA", ma);
         return query.getSingleResult();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new SanPhamRepositories().findByMa("SP02"));
     }
 }

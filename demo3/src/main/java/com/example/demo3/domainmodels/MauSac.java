@@ -2,6 +2,7 @@ package com.example.demo3.domainmodels;
 
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -17,6 +18,9 @@ public class MauSac {
 
     @Column(name = "Ten")
     private String Ten;
+
+    @OneToMany(mappedBy = "ms", fetch = FetchType.LAZY)
+    private List<ChiTietSP> listChiTietSP;
 
     public MauSac() {
     }

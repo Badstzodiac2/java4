@@ -9,6 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.apache.commons.beanutils.BeanUtils;
 
 import java.io.IOException;
@@ -70,13 +71,20 @@ public class ChucVuServlet extends HttpServlet {
         ChucVu cv = new ChucVu();
         try {
             BeanUtils.populate(cv, request.getParameterMap());
-            System.out.println(cv.toString());
-            this.repo.insert(cv);
+            HttpSession session = request.getSession();
+            if (cv.getMa().isEmpty()||cv.getTen().isEmpty()) {
+                session.setAttribute("errorMessage", "Vui lòng nhập đủ dữ liệu");
+                response.sendRedirect("/ChucVu/create");
+            } else {
+                session.setAttribute("cv", cv);
+                System.out.println("Thêm thành công");
+                System.out.println(cv.toString());
+                this.repo.insert(cv);
+                response.sendRedirect("/ChucVu/index");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("Thêm thành công");
-        response.sendRedirect("/ChucVu/index");
 
 
     }

@@ -1,11 +1,14 @@
-<%--
+<%@ page import="com.example.demo3.domainmodels.ChucVu" %><%--
   Created by IntelliJ IDEA.
   User: Acer
   Date: 3/9/2023
   Time: 1:29 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" session="true"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="f" uri="jakarta.tags.functions" %>
+
 <html>
 <head>
     <title>Title</title>
@@ -18,16 +21,23 @@
 
 </head>
 <body>
+    <c:if test="${ not empty errorMessage }">
+        <div class="alert alert-danger">${ errorMessage }</div>
+    </c:if>
     <div class="container">
         <form method="post"  action="/NhanVien/store" target="_blank">
             <h1>Form tạo mới nhân viên</h1>
             <div class="mb-3">
-                <label class="form-label">Mã</label>
-                <input type="text" class="form-control" name="ma" required>
+                <label class="form-label">Mã *</label>
+                <input type="text" class="form-control" name="ma" >
             </div>
             <div class="mb-3">
-                <label class="form-label">Tên</label>
-                <input type="text" class="form-control" name="ten" required>
+                <label class="form-label">Tên *</label>
+                <input type="text" class="form-control" name="ten" >
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Tên đệm</label>
+                <input type="text" class="form-control" name="tenDem" required>
             </div>
             <div class="mb-3">
                 <label class="form-label">Họ</label>
@@ -49,9 +59,25 @@
                 </div>
             </div>
             <div class="mb-3">
-                <label class="form-label">Ngày sinh</label>
+                <label class="form-label">Ngày sinh *</label>
                 <input type="date" class="form-control" name="ngaySinh" required>
             </div>
+            <div class="mb-3">
+                <label class="form-label">Chức vụ</label>
+                <select name="chucVu" id="" class="form-select">
+                    <c:forEach items="${positions}" var="cv">
+                        <option value="${cv.ma}">${cv.ten}</option></c:forEach>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Cửa hàng</label>
+                <select name="cuaHang" id="" class="form-select">
+                    <c:forEach items="${listCuaHang}" var="ch">
+                        <option value="${ch.ma}">${ch.ten}</option></c:forEach>
+                </select>
+            </div>
+
             <div class="mb-3">
                 <label class="form-label">SĐT</label>
                 <input type="number" class="form-control" name="sdt" required>
@@ -61,8 +87,8 @@
                 <input type="text" class="form-control" name="diaChi" required>
             </div>
             <div class="mb-3">
-                <label class="form-label">Mật khẩu</label>
-                <input type="number" class="form-control" name="matKhau" required>
+                <label class="form-label">Mật khẩu *</label>
+                <input type="password" class="form-control" name="matKhau" required>
             </div>
             <div class="mb-3">
                 <label class="form-label">Tình trạng</label>
@@ -79,7 +105,7 @@
                     </label>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" onclick="return validateForm()">Submit</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
         <script>
             function validateForm() {

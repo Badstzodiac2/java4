@@ -41,6 +41,7 @@
             <td>Dia Chi</td>
             <td>SDT</td>
             <td>Trạng thái</td>
+            <td>Chức vụ</td>
             <td>Thao tác</td>
             </thead>
             <tbody>
@@ -56,6 +57,7 @@
                     <td><c:if test="${nv.trangThai == 'true'}">Đang làm</c:if>
                         <c:if test="${nv.trangThai == 'false'}">Đã nghỉ</c:if>
                     </td>
+                    <td>${nv.cv.ten}</td>
                     <td>
                         <a href="/NhanVien/edit?Ma=${nv.ma}" target="_blank" class="btn btn-primary">Cập nhật</a>
                         <a href="/NhanVien/delete?Ma=${nv.ma}" class="btn btn-danger">Xóa</a>

@@ -2,7 +2,7 @@ package com.example.demo3.repository;
 
 import com.example.demo3.domainmodels.NhanVien;
 import com.example.demo3.utils.HibernateUtil;
-import com.example.demo3.viewmodel.QLNhanVien;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import org.hibernate.Session;
 
@@ -62,10 +62,26 @@ public class NhanVienRepositories {
     }
 
     public NhanVien findByMa(String ma){
-        String hql = "SELECT nvObj FROM NhanVien nvObj WHERE nvObj.Ma = ?1";
+        String hql = "SELECT nvObj FROM NhanVien nvObj WHERE nvObj.Ma = :MA";
         TypedQuery<NhanVien> query =
                 this.hSession.createQuery(hql, NhanVien.class);
-        query.setParameter(1, ma);
+        query.setParameter("MA", ma);
         return query.getSingleResult();
     }
+
+    public NhanVien login (String ma, String matKhau){
+        String hql = "SELECT nv FROM NhanVien nv Where nv.Ma = :ma AND nv.MatKhau = :matkhau";
+        TypedQuery<NhanVien>query =
+                this.hSession.createQuery(hql, NhanVien.class);
+                query.setParameter("ma", ma);
+                query.setParameter("matkhau", matKhau);
+        try {
+            NhanVien nv = query.getSingleResult();
+            return nv;
+        } catch (NoResultException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }
